@@ -46,7 +46,7 @@ namespace TrungTamLuaDao.Controllers
             if (res == ErrorType.Succeed) return Ok("Added");
             return NotFound("Not exist!");
         }
-        [HttpPut("{id}"), Authorize(Roles = "Admin, Tutor")]
+        [HttpPut("{id}"), Authorize(Roles = "Admin")]
         public IActionResult Update(int id, TutorAssignmentModel model)
         {
             var res = _tutorAssignmentRepo.Update(id, model);

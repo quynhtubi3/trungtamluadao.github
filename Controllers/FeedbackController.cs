@@ -18,14 +18,14 @@ namespace TrungTamLuaDao.Controllers
         {
             _feedbackRepo = new FeedbackRepo();
         }
-        [HttpGet("{id}"), Authorize(Roles = "Admin, Tutor")]
+        [HttpGet("{id}"), Authorize(Roles = "Admin")]
         public ActionResult GetById(int id)
         {
             var res = _feedbackRepo.GetById(id);
             if (res != null) return Ok(res);
             return NotFound("Not exist");
         }
-        [HttpGet, Authorize(Roles = "Admin, Tutor")]
+        [HttpGet, Authorize(Roles = "Admin")]
         public IActionResult GetAll(Pagination pagination)
         {
             var res = _feedbackRepo.GetAll(pagination);
@@ -53,28 +53,28 @@ namespace TrungTamLuaDao.Controllers
             if (res == ErrorType.Succeed) return Ok("Added");
             return NotFound("Not exist!");
         }
-        [HttpGet("sub/{id}"), Authorize(Roles = "Admin, Tutor")]
+        [HttpGet("sub/{id}"), Authorize(Roles = "Admin")]
         public ActionResult GetBySubId(Pagination pagination, int id)
         {
             var res = _feedbackRepo.GetBySubId(pagination, id);
             if (res != null) return Ok(res);
             return NotFound("Not exist");
         }
-        [HttpGet("tutor/{id}"), Authorize(Roles = "Admin, Tutor")]
+        [HttpGet("tutor/{id}"), Authorize(Roles = "Admin")]
         public ActionResult GetByStdId(Pagination pagination, int id)
         {
             var res = _feedbackRepo.GetByTutorId(pagination, id);
             if (res != null) return Ok(res);
             return NotFound("Not exist");
         }
-        [HttpGet("date"), Authorize(Roles = "Admin, Tutor")]
+        [HttpGet("date"), Authorize(Roles = "Admin")]
         public ActionResult GetByDate(Pagination pagination, DateTime date)
         {
             var res = _feedbackRepo.GetByDate(pagination, date);
             if (res != null) return Ok(res);
             return NotFound("Not exist");
         }
-        [HttpGet("grade/{grade}"), Authorize(Roles = "Admin, Tutor")]
+        [HttpGet("grade/{grade}"), Authorize(Roles = "Admin")]
         public ActionResult GetByGrade(Pagination pagination, float grade)
         {
             var res = _feedbackRepo.GetByGrade(pagination, grade);
