@@ -82,7 +82,7 @@ namespace TrungTamLuaDao.Controllers
             if (res.data.Count() != 0) return Ok(res);
             return BadRequest("Null");
         }
-        [HttpPut("{id}"), Authorize(Roles = "Admin")]
+        [HttpPut("Ban/{id}"), Authorize(Roles = "Admin")]
         public IActionResult BanAcc(int id)
         {
             var res = _accountRepo.BanAcc(id);
