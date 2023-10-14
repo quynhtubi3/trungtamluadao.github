@@ -13,7 +13,9 @@ namespace TrungTamLuaDao.IRepository
         ErrorType ChangeStatus(string userName, string status);
         PageResult<account> GetListAccount(Pagination pagination);
         PageResult<account> GetByDec(Pagination pagination, int id);
+        string ChangePasswordAfterForgot(ForGotPasswordScreenModel FPSModel, ChangePasswordAfterForgotModel CPModel);
         ErrorType BanAcc(int id);
+        string CheckVerifyCodeForgotPassword(ForGotPasswordScreenModel model);
         //bool RenewToken(string username);
     }
 }
