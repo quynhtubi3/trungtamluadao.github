@@ -30,5 +30,6 @@ namespace TrungTamLuaDao.Context
         public virtual DbSet<Fee> Fees { get; set; }
         public virtual DbSet<PaymentHistory> PaymentHistorys { get; set; }
         public virtual DbSet<PaymentType> PaymentTypes { get; set; }
+        public virtual DbSet<VerifyCode> VerifyCodes { get; set; }
     }
 }

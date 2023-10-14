@@ -88,3 +88,11 @@ C:\Users\Admin\Documents\C#\TrungTamLuaDao\TrungTamLuaDao\obj\Debug\net6.0\Trung
 C:\Users\Admin\Documents\C#\TrungTamLuaDao\TrungTamLuaDao\obj\Debug\net6.0\TrungTamLuaDao.genruntimeconfig.cache
 C:\Users\Admin\Documents\C#\TrungTamLuaDao\TrungTamLuaDao\obj\Debug\net6.0\ref\TrungTamLuaDao.dll
 C:\Users\Admin\Documents\C#\TrungTamLuaDao\TrungTamLuaDao\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\Users\Admin\Documents\C#\TrungTamLuaDao\TrungTamLuaDao\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
+C:\Users\Admin\Documents\C#\TrungTamLuaDao\TrungTamLuaDao\bin\Debug\net6.0\MailKit.dll
+C:\Users\Admin\Documents\C#\TrungTamLuaDao\TrungTamLuaDao\bin\Debug\net6.0\MimeKit.dll
+C:\Users\Admin\Documents\C#\TrungTamLuaDao\TrungTamLuaDao\bin\Debug\net6.0\System.Formats.Asn1.dll
+C:\Users\Admin\Documents\C#\TrungTamLuaDao\TrungTamLuaDao\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Admin\Documents\C#\TrungTamLuaDao\TrungTamLuaDao\bin\Debug\net6.0\System.Text.Encoding.CodePages.dll
+C:\Users\Admin\Documents\C#\TrungTamLuaDao\TrungTamLuaDao\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Admin\Documents\C#\TrungTamLuaDao\TrungTamLuaDao\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll

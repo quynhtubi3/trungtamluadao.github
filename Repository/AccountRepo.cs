@@ -50,6 +50,31 @@ namespace TrungTamLuaDao.Repository
             return false;
         }
 
+        public string ChangePasswordAfterForgot(ForGotPasswordScreenModel FPSModel, ChangePasswordAfterForgotModel CPModel)
+        {
+            var check = CheckVerifyCodeForgotPassword(FPSModel);
+            if (check == "True")
+            {
+                if (CPModel.Password == CPModel.ConfirmPassword)
+                {
+                    var currentAI = _context.Students.FirstOrDefault(x => x.Email == FPSModel.Email).accountID;
+                    if (currentAI == null) currentAI = _context.Tutors.FirstOrDefault(x => x.Email == FPSModel.Email).accountID;
+                    if (currentAI != null)
+                    {
+                        var currentAccount = _context.accounts.FirstOrDefault(x => x.accountID == currentAI);
+                        currentAccount.password = HashPassword(CPModel.Password);
+                        currentAccount.updateAt = DateTime.Now;
+                        _context.accounts.Update(currentAccount);
+                        _context.SaveChanges();
+                        return "Changed";
+                    }
+                    return "This email are unautthozired!";
+                }
+                return "Invalid password";
+            }
+            return check;
+        }
+
         public ErrorType ChangeStatus(string userName, string status)
         {
             var currentAccount = _context.accounts.FirstOrDefault(x => x.userName == userName);
@@ -62,6 +87,48 @@ namespace TrungTamLuaDao.Repository
                 return ErrorType.Succeed;
             }
             return ErrorType.NotExist;
+        }
+
+        public string CheckVerifyCodeForgotPassword(ForGotPasswordScreenModel model)
+        {
+            if (model.Email != "" && model.VerifyCode == "")
+            {
+                Random random = new Random();
+                var randomCode = random.Next(100000, 1000000).ToString();
+                SendMail.send(model.Email, randomCode,"Verify code for TrungTamLuaDao");
+                if (!_context.VerifyCodes.Any(x => x.Emaiil ==  model.Email)) 
+                {
+                    _context.VerifyCodes.Add(new VerifyCode()
+                    {
+                        Code = randomCode,
+                        Emaiil = model.Email,
+                        ExpiredTime = DateTime.Now.AddMinutes(1)
+                    });
+                    _context.SaveChanges();
+                }
+                var currentVC = _context.VerifyCodes.FirstOrDefault(x => x.Emaiil == model.Email);
+                currentVC.Code = randomCode;
+                currentVC.ExpiredTime = DateTime.Now.AddMinutes(1);
+                _context.VerifyCodes.Update(currentVC);
+                _context.SaveChanges();
+                return "Sent";
+            }
+            if (model.Email != "" && model.VerifyCode != "")
+            {
+                var currentVC = _context.VerifyCodes.FirstOrDefault(x => x.Emaiil == model.Email);
+                if (model.VerifyCode == currentVC.Code && DateTime.Now <= currentVC.ExpiredTime)
+                {
+                    currentVC.Code = "";
+                    _context.VerifyCodes.Update(currentVC);
+                    _context.SaveChanges();
+                    return "True";
+                }
+                else
+                {
+                    return "False";
+                }
+            }
+            return "None";
         }
 
         public PageResult<account> GetByDec(Pagination pagination, int id)

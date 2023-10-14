@@ -682,6 +682,30 @@ namespace TrungTamLuaDao.Migrations
                     b.ToTable("TutorAssignments");
                 });
 
+            modelBuilder.Entity("TrungTamLuaDao.Data.VerifyCode", b =>
+                {
+                    b.Property<int>("VerifyCodeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VerifyCodeID"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Emaiil")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpiredTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("VerifyCodeID");
+
+                    b.ToTable("VerifyCodes");
+                });
+
             modelBuilder.Entity("TrungTamLuaDao.Data.account", b =>
                 {
                     b.Property<int>("accountID")

@@ -89,6 +89,17 @@ namespace TrungTamLuaDao.Controllers
             if (res == ErrorType.Succeed) return Ok("Done");
             return NotFound();
         }
+        [HttpPost("ForgetPassword"), AllowAnonymous]
+        public IActionResult ForgetPassword(ForgetPasswordModel model)
+        {
+            var res = _accountRepo.ChangePasswordAfterForgot(model.model1, model.model2);
+            if (res == "None") return BadRequest();
+            if (res == "False") return BadRequest("False");
+            if (res == "Sent") return Ok(res);
+            if (res == "Changed") return Ok("Updated password!");
+            if (res == "This email are unautthozired!") return NotFound(res);
+            return BadRequest(res);
+        }
         /* [HttpPost("renewToken"), Authorize(Roles = "Admin, Tutor, Student")]
         public IActionResult RenewToken()
         {
