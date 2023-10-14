@@ -82,23 +82,34 @@ namespace TrungTamLuaDao.Repository
             var lstF = _context.Fees.OrderBy(x => x.StudentID).ToList();
             int i = 0;
             List<Fee> feeList = new List<Fee>() { lstF[0] };
-            while (i < lstF.Count())
+            if (lstF.Count() < 2)
             {
-                if (lstF[i+1].StudentID == lstF[i].StudentID)
+                while (i < lstF.Count() - 1)
                 {
-                    feeList.Add(lstF[i + 1]);
-                    i++;
-                }
-                else
-                {
-                    res.Add(new StudentNotPaidModel()
+                    if (lstF[i + 1].StudentID == lstF[i].StudentID)
                     {
-                        Fees = feeList,
-                        StudentID = lstF[i].StudentID
-                    });
-                    i++;
-                    feeList = new List<Fee> { lstF[i] };
+                        feeList.Add(lstF[i + 1]);
+                        i++;
+                    }
+                    else
+                    {
+                        res.Add(new StudentNotPaidModel()
+                        {
+                            Fees = feeList,
+                            StudentID = lstF[i].StudentID
+                        });
+                        i++;
+                        feeList = new List<Fee> { lstF[i] };
+                    }
                 }
+            }
+            else
+            {
+                res.Add(new StudentNotPaidModel()
+                {
+                    Fees = feeList,
+                    StudentID = lstF[0].StudentID
+                });
             }
             return res;
         }
