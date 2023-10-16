@@ -55,20 +55,16 @@ namespace TrungTamLuaDao.Repository
             var check = CheckVerifyCodeForgotPassword(FPSModel);
             if (check == "True")
             {
-                if (CPModel.Password == CPModel.ConfirmPassword)
+                if (CPModel.Password == CPModel.ConfirmPassword && CPModel.Password != "")
                 {
                     var currentAI = _context.Students.FirstOrDefault(x => x.Email == FPSModel.Email).accountID;
                     if (currentAI == null) currentAI = _context.Tutors.FirstOrDefault(x => x.Email == FPSModel.Email).accountID;
-                    if (currentAI != null)
-                    {
-                        var currentAccount = _context.accounts.FirstOrDefault(x => x.accountID == currentAI);
-                        currentAccount.password = HashPassword(CPModel.Password);
-                        currentAccount.updateAt = DateTime.Now;
-                        _context.accounts.Update(currentAccount);
-                        _context.SaveChanges();
-                        return "Changed";
-                    }
-                    return "This email are unautthozired!";
+                    var currentAccount = _context.accounts.FirstOrDefault(x => x.accountID == currentAI);
+                    currentAccount.password = HashPassword(CPModel.Password);
+                    currentAccount.updateAt = DateTime.Now;
+                    _context.accounts.Update(currentAccount);
+                    _context.SaveChanges();
+                    return "Changed";
                 }
                 return "Invalid password";
             }
@@ -93,25 +89,30 @@ namespace TrungTamLuaDao.Repository
         {
             if (model.Email != "" && model.VerifyCode == "")
             {
-                Random random = new Random();
-                var randomCode = random.Next(100000, 1000000).ToString();
-                SendMail.send(model.Email, randomCode,"Verify code for TrungTamLuaDao");
-                if (!_context.VerifyCodes.Any(x => x.Emaiil ==  model.Email)) 
+                var check = _context.Students.Any(x => x.Email == model.Email) || _context.Tutors.Any(x => x.Email == model.Email);
+                if (check)
                 {
-                    _context.VerifyCodes.Add(new VerifyCode()
+                    Random random = new Random();
+                    var randomCode = random.Next(100000, 1000000).ToString();
+                    SendMail.send(model.Email, randomCode, "Verify code for TrungTamLuaDao");
+                    if (!_context.VerifyCodes.Any(x => x.Emaiil == model.Email))
                     {
-                        Code = randomCode,
-                        Emaiil = model.Email,
-                        ExpiredTime = DateTime.Now.AddMinutes(1)
-                    });
+                        _context.VerifyCodes.Add(new VerifyCode()
+                        {
+                            Code = randomCode,
+                            Emaiil = model.Email,
+                            ExpiredTime = DateTime.Now.AddMinutes(1)
+                        });
+                        _context.SaveChanges();
+                    }
+                    var currentVC = _context.VerifyCodes.FirstOrDefault(x => x.Emaiil == model.Email);
+                    currentVC.Code = randomCode;
+                    currentVC.ExpiredTime = DateTime.Now.AddMinutes(1);
+                    _context.VerifyCodes.Update(currentVC);
                     _context.SaveChanges();
+                    return "Sent";
                 }
-                var currentVC = _context.VerifyCodes.FirstOrDefault(x => x.Emaiil == model.Email);
-                currentVC.Code = randomCode;
-                currentVC.ExpiredTime = DateTime.Now.AddMinutes(1);
-                _context.VerifyCodes.Update(currentVC);
-                _context.SaveChanges();
-                return "Sent";
+                return "Not exist";
             }
             if (model.Email != "" && model.VerifyCode != "")
             {

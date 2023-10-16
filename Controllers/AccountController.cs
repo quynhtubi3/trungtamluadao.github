@@ -94,10 +94,10 @@ namespace TrungTamLuaDao.Controllers
         {
             var res = _accountRepo.ChangePasswordAfterForgot(model.model1, model.model2);
             if (res == "None") return BadRequest();
-            if (res == "False") return BadRequest("False");
+            if (res == "False") return BadRequest("The code is incorrect or has expired");
             if (res == "Sent") return Ok(res);
             if (res == "Changed") return Ok("Updated password!");
-            if (res == "This email are unautthozired!") return NotFound(res);
+            if (res == "Not exist") return NotFound("This email are unauthozired!");
             return BadRequest(res);
         }
         /* [HttpPost("renewToken"), Authorize(Roles = "Admin, Tutor, Student")]
