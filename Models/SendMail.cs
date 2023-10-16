@@ -29,8 +29,6 @@ namespace TrungTamLuaDao.Models
                 // Gửi email
                 smtpClient.Send(message);
                 return "Email đã được gửi thành công.";
-
-
             }
             catch (Exception ex)
             {
