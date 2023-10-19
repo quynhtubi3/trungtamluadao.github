@@ -92,6 +92,21 @@ namespace TrungTamLuaDao.Repository
             return ErrorType.NotExist;
         }
 
+        public bool UpdateInfomation(string userName, UpdateInfo4Student model)
+        {
+            var currentAccount = _context.accounts.FirstOrDefault(x => x.userName ==  userName);
+            var currentStudent = _context.Students.FirstOrDefault(x => x.accountID == currentAccount.accountID);
+            if (model.FirstName != null) currentStudent.FirstName = model.FirstName;
+            if (model.LastName != null) currentStudent.LastName = model.LastName;
+            if (model.ContactNumber == null) model.ContactNumber = 0;
+            if (model.ContactNumber != null) currentStudent.ContactNumber = model.ContactNumber;
+            if (model.avatar != null) currentAccount.avatar = model.avatar;
+            _context.Students.Update(currentStudent);
+            _context.accounts.Update(currentAccount);
+            _context.SaveChanges();
+            return true;
+        }
+
         public ErrorType UpdateTotalMoney(int id, int money, int type)
         {
             var currentStudent = _context.Students.FirstOrDefault(x => x.StudentID == id);

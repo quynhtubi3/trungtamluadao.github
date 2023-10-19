@@ -15,12 +15,35 @@ namespace TrungTamLuaDao.Repository
     public class AccountRepo : IAccountRepo
     {
         private readonly IConfiguration _configuration;
-        private readonly TrungTamLuaDaoContext _context;
+        private readonly TrungTamLuaDaoContext _context;        
 
         public AccountRepo(IConfiguration configuration)
         {
             this._configuration = configuration;
             this._context = new TrungTamLuaDaoContext();
+        }
+
+        public bool AddAccount(accountModel model)
+        {
+            if (_context.Decentralizations.Any(x => x.DecentralizationID == model.DecentralizationId))
+            {
+                account account = new()
+                {
+                    userName = model.userName,
+                    avatar = "",
+                    password = HashPassword(model.password),
+                    DecentralizationId = model.DecentralizationId,
+                    status = "Working",
+                    ResetPasswordToken = "",
+                    ResetPasswordTokenExpiry = DateTime.Now,
+                    createAt = DateTime.Now,
+                    updateAt = DateTime.Now
+                };
+                _context.accounts.Add(account);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public ErrorType BanAcc(int id)
@@ -176,9 +199,8 @@ namespace TrungTamLuaDao.Repository
 
         public bool SignUp(SignUpModel signUpModel)
         {
-            if (!(_context.accounts.Any(x => x.userName == signUpModel.UserName)) && 
-                signUpModel.Password == signUpModel.ConfirmPassword && 
-                _context.Decentralizations.Any(x => x.DecentralizationID == signUpModel.DecentralizationID))
+            if (!(_context.accounts.Any(x => x.userName == signUpModel.UserName)) &&
+                signUpModel.Password == signUpModel.ConfirmPassword)
             {
                 account _account = new()
                 {
@@ -186,13 +208,27 @@ namespace TrungTamLuaDao.Repository
                     avatar = null,
                     password = HashPassword(signUpModel.Password),
                     status = "Working",
-                    DecentralizationId = signUpModel.DecentralizationID,
+                    DecentralizationId = 3,
                     ResetPasswordToken = string.Empty,
                     ResetPasswordTokenExpiry = null,
                     createAt = DateTime.Now,
                     updateAt = DateTime.Now
-                };
+                };                
                 _context.accounts.Add(_account);
+                _context.SaveChanges();
+                var currentAccount = _context.accounts.FirstOrDefault(x => x.userName ==  _account.userName);
+                Student student = new()
+                {
+                    accountID = currentAccount.accountID,
+                    ContactNumber = 0,
+                    FirstName = signUpModel.FirstName,
+                    LastName = signUpModel.LastName,
+                    Email = "",
+                    TotalMoney = 0,
+                    createAt = DateTime.Now,
+                    updateAt = DateTime.Now
+                };
+                _context.Students.Add(student);
                 _context.SaveChanges();
                 return true;
             }

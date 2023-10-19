@@ -9,6 +9,7 @@ namespace TrungTamLuaDao.IRepository
     {
         string SignIn(SignInModel signInModel);
         bool SignUp(SignUpModel signUpModel);
+        bool AddAccount(accountModel model);
         bool ChangePassword(string userName, ChangePasswordModel changePasswordModel);
         ErrorType ChangeStatus(string userName, string status);
         PageResult<account> GetListAccount(Pagination pagination);

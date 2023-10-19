@@ -14,7 +14,5 @@ namespace AuthenticationForm.Models
         public string Password { get; set; } = null!;
         [Required]
         public string ConfirmPassword { get; set; } = null!;
-        [Required]
-        public int DecentralizationID { get; set; }
     }
 }

@@ -13,5 +13,6 @@ namespace TrungTamLuaDao.IRepository
         ErrorType Remove(int id);
         ErrorType Update(int id, StudentModel studentModel);
         ErrorType UpdateTotalMoney(int id, int money, int type);
+        bool UpdateInfomation(string userName, UpdateInfo4Student model);
     }
 }
