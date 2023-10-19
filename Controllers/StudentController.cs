@@ -64,5 +64,12 @@ namespace TrungTamLuaDao.Controllers
             if (res == ErrorType.Succeed) return Ok("Done");
             return NotFound();
         }
+        [HttpPut("updateInfomation"), Authorize(Roles = "Student")]
+        public IActionResult UpdateInfo(UpdateInfo4Student model)
+        {
+            var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "username").Value;
+            var res = _studentRepo.UpdateInfomation(userName, model);
+            return Ok("Done!");
+        }
     }
 }

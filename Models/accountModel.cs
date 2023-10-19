@@ -5,10 +5,8 @@ namespace TrungTamLuaDao.Data
     public class accountModel
     {
         [Required] public string userName { get; set; } = null!;
-        string avatar { get; set; } = null!;
-        [Required] string password { get; set; } = null!;
-        [Required] string status { get; set; } = null!;
-        [Required] int DecentralizationId { get; set; } 
+        [Required] public string password { get; set; } = null!;
+        [Required] public int DecentralizationId { get; set; } 
     }
 }
 

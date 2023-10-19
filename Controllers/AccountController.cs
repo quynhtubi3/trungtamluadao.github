@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrungTamLuaDao.Context;
+using TrungTamLuaDao.Data;
 using TrungTamLuaDao.Enum;
 using TrungTamLuaDao.IRepository;
 using TrungTamLuaDao.Models;
@@ -59,6 +60,13 @@ namespace TrungTamLuaDao.Controllers
                 succeed = false,
                 Msg = "Invalid UserName/ Password"
             });
+        }
+        [HttpPost("addAccount"), Authorize(Roles = "Admin")]
+        public IActionResult AddAccount(accountModel model)
+        {
+            var res = _accountRepo.AddAccount(model);
+            if (res == true) return Ok("Added!");
+            return BadRequest();
         }
         [HttpPut("changePassword"), Authorize(Roles = "Student, Admin, Tutor")]
         public IActionResult ChangePassword(ChangePasswordModel changePasswordModel)
