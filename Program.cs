@@ -10,20 +10,6 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        /*MaterialRepo repo = new MaterialRepo();
-        for (int i = 1; i < 17; i++)
-        {
-            for (int j = 1; j < 8;  j++)
-            {
-                repo.Add(new MaterialModel()
-                {
-                    CourseID = i,
-                    MaterialTypeId = j,
-                    MaterialTitle = "",
-                    MaterialLink = ""
-                });
-            }
-        }*/
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
