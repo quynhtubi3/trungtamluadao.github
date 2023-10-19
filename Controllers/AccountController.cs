@@ -1,6 +1,7 @@
 ﻿using AuthenticationForm.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TrungTamLuaDao.Context;
 using TrungTamLuaDao.Enum;
 using TrungTamLuaDao.IRepository;
 using TrungTamLuaDao.Models;
@@ -12,21 +13,27 @@ namespace TrungTamLuaDao.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountRepo _accountRepo;
-
+        private readonly TrungTamLuaDaoContext _context;
         public AccountController(IAccountRepo accountRepo)
         {
             _accountRepo = accountRepo;
+            _context = new TrungTamLuaDaoContext();
         }
         [HttpPost("signIn")]
         public IActionResult SignIn(SignInModel signIn)
-        {
+        {            
             var res = _accountRepo.SignIn(signIn);
             if (res != null)
             {
+                var currentAccount = _context.accounts.FirstOrDefault(x => x.userName == signIn.UserName);
+                var currentDecen = _context.Decentralizations.FirstOrDefault(x => x.DecentralizationID == currentAccount.DecentralizationId);
                 return Ok(new SignInResponse()
                 {
                     Token = res,
-                    responseMsg = "Signed In"
+                    responseMsg = "Signed In",
+                    userName = currentAccount.userName,
+                    password = currentAccount.password,
+                    decentralization = currentDecen.AuthorityName
                 });
             }
             return Unauthorized(new SignInResponse()
@@ -44,7 +51,7 @@ namespace TrungTamLuaDao.Controllers
                 return Ok(new SignUpResponse()
                 {
                     succeed = true,
-                    Msg = "Signed up"
+                    Msg = "Signed up",                    
                 });
             }
             return BadRequest(new SignUpResponse()
