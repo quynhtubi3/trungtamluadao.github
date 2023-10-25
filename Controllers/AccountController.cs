@@ -28,6 +28,42 @@ namespace TrungTamLuaDao.Controllers
             {
                 var currentAccount = _context.accounts.FirstOrDefault(x => x.userName == signIn.UserName);
                 var currentDecen = _context.Decentralizations.FirstOrDefault(x => x.DecentralizationID == currentAccount.DecentralizationId);
+                var currentUserS = _context.Students.FirstOrDefault(x => x.accountID == currentAccount.accountID);
+                if (currentDecen.AuthorityName == "Student")
+                {
+                    return Ok(new SignInResponse()
+                    {
+                        Token = res,
+                        responseMsg = "Signed In",
+                        userName = currentAccount.userName,
+                        password = currentAccount.password,
+                        decentralization = currentDecen.AuthorityName,
+                        contactNumber = currentUserS.ContactNumber,
+                        email = currentUserS.Email,
+                        firstName = currentUserS.FirstName,
+                        lastName = currentUserS.LastName,
+                        accountId = currentAccount.accountID,
+                        Id = currentUserS.StudentID
+                    });
+                }
+                else if (currentDecen.AuthorityName == "Tutor")
+                {
+                    var currentUserT = _context.Tutors.FirstOrDefault(x => x.accountID == currentAccount.accountID);
+                    return Ok(new SignInResponse()
+                    {
+                        Token = res,
+                        responseMsg = "Signed In",
+                        userName = currentAccount.userName,
+                        password = currentAccount.password,
+                        decentralization = currentDecen.AuthorityName,
+                        contactNumber = currentUserT.ContactNumber,
+                        email = currentUserT.Email,
+                        firstName = currentUserT.FirstName,
+                        lastName = currentUserT.LastName,
+                        accountId = currentAccount.accountID,
+                        Id = currentUserT.TutorID
+                    });
+                }
                 return Ok(new SignInResponse()
                 {
                     Token = res,

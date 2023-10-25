@@ -98,7 +98,7 @@ namespace TrungTamLuaDao.Repository
             var currentStudent = _context.Students.FirstOrDefault(x => x.accountID == currentAccount.accountID);
             if (model.FirstName != null) currentStudent.FirstName = model.FirstName;
             if (model.LastName != null) currentStudent.LastName = model.LastName;
-            if (model.ContactNumber == null) model.ContactNumber = 0;
+            if (model.ContactNumber == null) model.ContactNumber = "0";
             if (model.ContactNumber != null) currentStudent.ContactNumber = model.ContactNumber;
             if (model.avatar != null) currentAccount.avatar = model.avatar;
             _context.Students.Update(currentStudent);

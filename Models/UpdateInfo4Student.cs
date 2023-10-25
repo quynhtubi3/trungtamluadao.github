@@ -6,7 +6,7 @@ namespace TrungTamLuaDao.Models
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public int ContactNumber { get; set; }
+        public string ContactNumber { get; set; }
         public string? avatar { get; set; }
         [EmailAddress]
         public string? Email { get; set; }
