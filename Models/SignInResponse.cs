@@ -1,4 +1,7 @@
-﻿namespace TrungTamLuaDao.Models
+﻿using Org.BouncyCastle.Bcpg.OpenPgp;
+using System.ComponentModel.DataAnnotations;
+
+namespace TrungTamLuaDao.Models
 {
     public class SignInResponse
     {
@@ -9,6 +12,7 @@
             this.decentralization = string.Empty;
             this.userName = string.Empty;
             this.password = string.Empty;
+            this.email = string.Empty;
         }
 
         public string Token { get; set; }
@@ -16,5 +20,12 @@
         public string userName { get; set; }
         public string password { get; set; }
         public string decentralization { get; set; }
+        [EmailAddress]
+        public string email { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string contactNumber { get; set; }
+        public int accountId { get; set; }
+        public int Id { get; set; }
     }
 }

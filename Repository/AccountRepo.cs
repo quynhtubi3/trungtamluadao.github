@@ -220,7 +220,7 @@ namespace TrungTamLuaDao.Repository
                 Student student = new()
                 {
                     accountID = currentAccount.accountID,
-                    ContactNumber = 0,
+                    ContactNumber = "0",
                     FirstName = signUpModel.FirstName,
                     LastName = signUpModel.LastName,
                     Email = "",
