@@ -12,6 +12,8 @@ namespace TrungTamLuaDao.Data
         [Required] public string FirstName {get; set;}
         [Required] public string LastName {get; set;}
         [Required] public string ContactNumber {get; set;}
+        public string Address { get; set; }
+        public string HomeTown { get; set; }
         [Required, EmailAddress] public string Email {get; set;}
         public DateTime createAt { get; set; }
         public DateTime updateAt { get; set; }

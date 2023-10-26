@@ -6,6 +6,7 @@ using TrungTamLuaDao.Data;
 using TrungTamLuaDao.Enum;
 using TrungTamLuaDao.IRepository;
 using TrungTamLuaDao.Models;
+using TrungTamLuaDao.Helpers;
 
 namespace TrungTamLuaDao.Controllers
 {
@@ -19,6 +20,17 @@ namespace TrungTamLuaDao.Controllers
         {
             _accountRepo = accountRepo;
             _context = new TrungTamLuaDaoContext();
+        }
+        [HttpPost("upload-avatar"), Authorize]
+        public async Task<IActionResult> UploadFiles(IFormFile file)
+        {
+            var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "username").Value;
+            var currentAccount = _context.accounts.FirstOrDefault(x => x.userName ==  userName);
+            string url = await UplloadFile.UploadFile(file);
+            currentAccount.avatar = url;
+            _context.accounts.Update(currentAccount);
+            _context.SaveChanges();
+            return Ok(url);
         }
         [HttpPost("signIn")]
         public IActionResult SignIn(SignInModel signIn)
@@ -43,7 +55,10 @@ namespace TrungTamLuaDao.Controllers
                         firstName = currentUserS.FirstName,
                         lastName = currentUserS.LastName,
                         accountId = currentAccount.accountID,
-                        Id = currentUserS.StudentID
+                        Id = currentUserS.StudentID,
+                        avatar = currentAccount.avatar,
+                        HomeTown = currentUserS.HomeTown,
+                        Address = currentUserS.Address
                     });
                 }
                 else if (currentDecen.AuthorityName == "Tutor")
@@ -61,7 +76,10 @@ namespace TrungTamLuaDao.Controllers
                         firstName = currentUserT.FirstName,
                         lastName = currentUserT.LastName,
                         accountId = currentAccount.accountID,
-                        Id = currentUserT.TutorID
+                        Id = currentUserT.TutorID,
+                        avatar = currentAccount.avatar,
+                        HomeTown = currentUserT.HomeTown,
+                        Address = currentUserT.Address
                     });
                 }
                 return Ok(new SignInResponse()
@@ -70,7 +88,8 @@ namespace TrungTamLuaDao.Controllers
                     responseMsg = "Signed In",
                     userName = currentAccount.userName,
                     password = currentAccount.password,
-                    decentralization = currentDecen.AuthorityName
+                    decentralization = currentDecen.AuthorityName,
+                    avatar = currentAccount.avatar
                 });
             }
             return Unauthorized(new SignInResponse()

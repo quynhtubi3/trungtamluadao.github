@@ -33,7 +33,9 @@ namespace TrungTamLuaDao.Repository
                         Email = studentModel.Email,
                         TotalMoney = 0,
                         createAt = DateTime.Now,
-                        updateAt = DateTime.Now
+                        updateAt = DateTime.Now,
+                        Address = studentModel.Address,
+                        HomeTown = studentModel.HomeTown
                     };
                     _context.Students.Add(student);
                     _context.SaveChanges();
@@ -85,6 +87,8 @@ namespace TrungTamLuaDao.Repository
                 currentStudent.FirstName = studentModel.FirstName;
                 currentStudent.LastName = studentModel.LastName;
                 currentStudent.Email = studentModel.Email;
+                currentStudent.Address = studentModel.Address;
+                currentStudent.HomeTown = studentModel.HomeTown;
                 _context.Students.Update(currentStudent);
                 _context.SaveChanges();
                 return ErrorType.Succeed;
@@ -100,7 +104,8 @@ namespace TrungTamLuaDao.Repository
             if (model.LastName != null) currentStudent.LastName = model.LastName;
             if (model.ContactNumber == null) model.ContactNumber = "0";
             if (model.ContactNumber != null) currentStudent.ContactNumber = model.ContactNumber;
-            if (model.avatar != null) currentAccount.avatar = model.avatar;
+            if (model.Address != null) currentAccount.avatar = model.Address;
+            if (model.HomeTown != null) currentAccount.avatar = model.HomeTown;
             _context.Students.Update(currentStudent);
             _context.accounts.Update(currentAccount);
             _context.SaveChanges();
