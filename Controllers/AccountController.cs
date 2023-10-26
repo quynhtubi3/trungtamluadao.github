@@ -57,8 +57,9 @@ namespace TrungTamLuaDao.Controllers
                         accountId = currentAccount.accountID,
                         Id = currentUserS.StudentID,
                         avatar = currentAccount.avatar,
-                        HomeTown = currentUserS.HomeTown,
-                        Address = currentUserS.Address
+                        communeID = currentUserS.communeID,
+                        districtID = currentUserS.districtID,
+                        provinceID = currentUserS.provinceID
                     });
                 }
                 else if (currentDecen.AuthorityName == "Tutor")
@@ -78,8 +79,9 @@ namespace TrungTamLuaDao.Controllers
                         accountId = currentAccount.accountID,
                         Id = currentUserT.TutorID,
                         avatar = currentAccount.avatar,
-                        HomeTown = currentUserT.HomeTown,
-                        Address = currentUserT.Address
+                        communeID = currentUserT.communeID,
+                        districtID = currentUserT.districtID,
+                        provinceID = currentUserT.provinceID
                     });
                 }
                 return Ok(new SignInResponse()

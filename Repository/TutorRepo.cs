@@ -30,8 +30,9 @@ namespace TrungTamLuaDao.Repository
                         Email = tutorModel.Email,
                         createAt = DateTime.Now,
                         updateAt = DateTime.Now,
-                        Address = tutorModel.Address,
-                        HomeTown = tutorModel.HomeTown
+                        communeID = tutorModel.communeID,
+                        districtID = tutorModel.districtID,
+                        provinceID = tutorModel.provinceID
                     };
                     _context.Tutors.Add(tutor);
                     _context.SaveChanges();
@@ -86,8 +87,9 @@ namespace TrungTamLuaDao.Repository
                         currentT.ContactNumber = tutorModel.ContactNumber;
                         currentT.Email = tutorModel.Email;
                         currentT.updateAt = DateTime.Now;
-                        currentT.Address = tutorModel.Address;
-                        currentT.HomeTown = tutorModel.HomeTown;
+                        currentT.provinceID = tutorModel.provinceID;
+                        currentT.districtID = tutorModel.districtID;
+                        currentT.communeID = tutorModel.communeID;
                         _context.Tutors.Update(currentT);
                         _context.SaveChanges();
                         return ErrorType.Succeed;
