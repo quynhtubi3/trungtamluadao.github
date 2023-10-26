@@ -25,7 +25,10 @@ namespace TrungTamLuaDao.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string contactNumber { get; set; }
+        public string Address { get; set; }
+        public string HomeTown { get; set; }
         public int accountId { get; set; }
         public int Id { get; set; }
+        public string avatar { get; set; }
     }
 }

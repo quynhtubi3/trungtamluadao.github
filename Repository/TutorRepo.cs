@@ -29,7 +29,9 @@ namespace TrungTamLuaDao.Repository
                         ContactNumber = tutorModel.ContactNumber,
                         Email = tutorModel.Email,
                         createAt = DateTime.Now,
-                        updateAt = DateTime.Now
+                        updateAt = DateTime.Now,
+                        Address = tutorModel.Address,
+                        HomeTown = tutorModel.HomeTown
                     };
                     _context.Tutors.Add(tutor);
                     _context.SaveChanges();
@@ -84,6 +86,8 @@ namespace TrungTamLuaDao.Repository
                         currentT.ContactNumber = tutorModel.ContactNumber;
                         currentT.Email = tutorModel.Email;
                         currentT.updateAt = DateTime.Now;
+                        currentT.Address = tutorModel.Address;
+                        currentT.HomeTown = tutorModel.HomeTown;
                         _context.Tutors.Update(currentT);
                         _context.SaveChanges();
                         return ErrorType.Succeed;
