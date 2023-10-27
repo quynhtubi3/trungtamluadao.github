@@ -31,5 +31,6 @@ namespace TrungTamLuaDao.Models
         public int accountId { get; set; }
         public int Id { get; set; }
         public string avatar { get; set; }
+        public int? totalMoney { get; set; }
     }
 }
