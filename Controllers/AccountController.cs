@@ -59,7 +59,8 @@ namespace TrungTamLuaDao.Controllers
                         avatar = currentAccount.avatar,
                         communeID = currentUserS.communeID,
                         districtID = currentUserS.districtID,
-                        provinceID = currentUserS.provinceID
+                        provinceID = currentUserS.provinceID,
+                        totalMoney = currentUserS.TotalMoney
                     });
                 }
                 else if (currentDecen.AuthorityName == "Tutor")
